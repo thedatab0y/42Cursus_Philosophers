@@ -6,12 +6,15 @@
 /*   By: busmanov <busmanov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:14:39 by busmanov          #+#    #+#             */
-/*   Updated: 2023/03/09 06:15:49 by busmanov         ###   ########.fr       */
+/*   Updated: 2023/03/09 16:41:42 by busmanov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// RETURNS CURRENT TIME in milliseconds as a long integer
+// gettimeofday(, NULL(for time zones as we are not interested))
+// 
 long	current_time(void)
 {
 	struct timeval	current_time;
@@ -22,6 +25,9 @@ long	current_time(void)
 	return (millisec_time);
 }
 
+// function to make philo sleep
+// usleep(300) causes the philo to wait for 300 miliseconds
+// this helps reduce CPU while philo waits
 void	ft_usleep(long millisec, t_philo *philo)
 {
 	long	sleep_start_time;
@@ -33,6 +39,7 @@ void	ft_usleep(long millisec, t_philo *philo)
 		usleep(300);
 }
 
+// free the mem that has been dynamically allocated
 void	*free_mem(t_philo *philo, pthread_mutex_t *fork, int *param)
 {
 	free(param);
@@ -41,6 +48,7 @@ void	*free_mem(t_philo *philo, pthread_mutex_t *fork, int *param)
 	return (NULL);
 }
 
+// checks if it is a number
 int	ft_isnumber(char *str)
 {
 	if (!str)

@@ -6,12 +6,25 @@
 /*   By: busmanov <busmanov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:14:05 by busmanov          #+#    #+#             */
-/*   Updated: 2023/03/09 06:15:31 by busmanov         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:59:50 by busmanov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// initializes an array of 'num_of_philo' philo structs where
+// it is a parameter passed to the program
+// id = the philo's unique identifier (i + 1, indices start at 0)
+// num_of_meals = num of meals the philo has eaten (0)
+// start_time = the time when the philo started dining
+// last_meal_time = time when the philo last ate
+// alive_or_dead = initialized to 'alive_or_dead' parameter passed
+// param = a pointer to the program's parameter
+// left_fork = a pointer to the philo's left fork
+// fork + i = fork is array of mutexes, i is philos index
+// right_fork = set to ' fork _ ((i + 1) % param[num_of_philo]) where
+// param[num_of_philo] is the number of philos
+// i is incremented till it reaches param[num_of_philo]
 t_philo	*init_philo(pthread_mutex_t *fork, pthread_mutex_t *print,
 			int *param, int *alive_or_dead)
 {
@@ -38,6 +51,14 @@ t_philo	*init_philo(pthread_mutex_t *fork, pthread_mutex_t *print,
 	}
 	return (philo);
 }
+
+// ENTRY POINT and is used for initializing the dining philo prob
+// mutex is like a lock that a thread can get before accessing a shared
+// resource and release when it is done using the resouce. 
+// initialize  the philo structs and their attributes using the 'init_philo'
+// - create seperate thread for each philo and start their activities
+// using creat_threads. 
+// - at last, free the memory allocated for the philo structs, fork, mutexes
 
 void	*initialize(int *param)
 {

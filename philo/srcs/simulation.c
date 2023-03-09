@@ -6,12 +6,21 @@
 /*   By: busmanov <busmanov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:14:34 by busmanov          #+#    #+#             */
-/*   Updated: 2023/03/09 06:15:45 by busmanov         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:02:59 by busmanov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// the loop goes on till philo has eaten
+// the total num of meals specified in the program
+// philo->num_of_meals = num of meals it has currently eaten
+// philo-> param[num_of_meals] = total num of meals it needs to eat
+// The tid parameter is cast to a pointer to 
+// a t_philo struct and assigned to the variable philo
+// inside while, if the time since the philo's last meal is greater
+// than the time allowed for the philo to die, it prints
+// msg that the philo died
 void	*waiter_routine(void *tid)
 {
 	t_philo	*philo;
@@ -29,11 +38,15 @@ void	*waiter_routine(void *tid)
 	return (NULL);
 }
 
+// prints what the philo is doing
+// if (action == eating), last_meal time to current_time
+// that will be later used to check if a philo has
+// exceeded the allowed time without a meal and thus die
+// increments the num_meals by 1, coz it has just eaten
+// ft_usleep to make philo sleep for specified time
+// time_to_eat represents the time the philo spends eatin
 void	action(t_philo *philo, t_lifecycle action)
 {
-	//int	timestamp;
-
-	//timestamp = current_time() - philo->start_time;
 	print(philo, action);
 	if (action == eating)
 	{
@@ -45,6 +58,18 @@ void	action(t_philo *philo, t_lifecycle action)
 		ft_usleep(philo->param[time_to_sleep], philo);
 }
 
+// main logic for each philo's behaviour is implemented
+// casts 'tid' to a 't_philo' and assign to 'philo'
+// that allows the func to access the philo's info like
+// 'id', 'num_of_meals', 'left_fork' and param
+// if philo's ID is even, philo sleeps
+// ' even num-numbered philos do not try to grap their right fork
+// before left fork, which would cause a deadlock.
+// - the loop runs as long as the philo has not reached its required num
+// of meals and is still alive and there are more than 1 philo.
+// - locks the philo's left fork and then the right fork to
+// prevent others trying to grap the same forks at the same time
+// action() updates philos state and prints
 void	*simulation(void *tid)
 {
 	t_philo	*philo;

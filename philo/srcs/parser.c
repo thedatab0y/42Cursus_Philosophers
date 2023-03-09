@@ -6,12 +6,13 @@
 /*   By: busmanov <busmanov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:14:21 by busmanov          #+#    #+#             */
-/*   Updated: 2023/03/09 06:15:37 by busmanov         ###   ########.fr       */
+/*   Updated: 2023/03/09 17:13:37 by busmanov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+//used to check whether the command line args are valid numbers.
 int	check_if_number(char **argv)
 {
 	int	i;
@@ -29,6 +30,10 @@ int	check_if_number(char **argv)
 	return (EXIT_SUCCESS);
 }
 
+// used to validate the values of command line arguvemnts passed
+//param is being used to store the value of specific command like
+//argv passed to the program. a parameter that program
+// expects to recieve as a command like argv like die, time to eat...
 int	is_valid_argv(int index, int param)
 {
 	if (index == 0 && !param)
@@ -40,6 +45,8 @@ int	is_valid_argv(int index, int param)
 	return (EXIT_FAILURE);
 }
 
+// used to convert CLA passed from strings to int and validate
+// the resulting int array 'param' can then be used as input for other functions
 int	*atoi_array(int argc, char **argv)
 {
 	int	i;
@@ -63,6 +70,9 @@ int	*atoi_array(int argc, char **argv)
 	return (param);
 }
 
+// parse and validate the command line args and to allocate memory
+// for and initialize an int array that represents parsed arguments.
+// the resulting int array can then be used as input for other functions.
 int	*parse(int argc, char **argv)
 {
 	int		*param;
